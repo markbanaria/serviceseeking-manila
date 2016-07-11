@@ -9,7 +9,7 @@ module.exports = (grunt) ->
         options:
           style: 'expanded'
         files: 
-          'dist/css/style.css': 'app/stylesheets/style.scss'
+          'dist/css/style.css': 'app/stylesheets/style.sass'
 
     # grunt slim
     slim:
@@ -22,7 +22,7 @@ module.exports = (grunt) ->
       html:
         files: ['**/*.html']
       sass:
-        files: ['**/*.scss']
+        files: ['**/*.scss', '**/*.css', '**/*.sass']
         tasks: ['sass']
       slim:
         files: ['**/*.slim']
@@ -35,7 +35,11 @@ module.exports = (grunt) ->
       server:
         options:
           base: 'dist'
-          open: true
+
+    #grunt uglify
+    uglify:
+      build:
+        files: 'dist/js/app.js' : ['app/javascripts/app.js', 'node_modules/jquery/dist/jquery.min.js', 'node_modules/bootstrap-sass/assets/javascripts/bootstrap.js']      
 
     # grunt gh-pages
     'gh-pages':
@@ -49,7 +53,7 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks 'grunt-slim'
   grunt.loadNpmTasks 'grunt-contrib-connect'
   grunt.loadNpmTasks 'grunt-gh-pages'
-  grunt.loadNpmTasks 'grunt-contrib-requirejs'
+  grunt.loadNpmTasks 'grunt-contrib-uglify'
 
   # tasks
-  grunt.registerTask 'default', ['sass', 'slim', 'connect', 'watch']
+  grunt.registerTask 'default', ['uglify', 'sass', 'slim', 'connect', 'watch']

@@ -1,4 +1,15 @@
-h1
-  | Hello1
-h2
-  | Hi  
+require slim/include
+
+head
+  link rel="stylesheet" href="css/style.css"
+
+body
+
+  .container
+    .row
+      .col-xs-12
+        h1 Hello World
+
+  ==Slim::Template.new('./file.slim').render(scope)      
+
+  script src="js/app.js"  
