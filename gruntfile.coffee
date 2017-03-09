@@ -8,7 +8,7 @@ module.exports = (grunt) ->
       build:
         options:
           style: 'expanded'
-        files: 
+        files:
           'dist/css/style.css': 'app/stylesheets/style.sass',
           'dist/css/bootstrap.css': 'node_modules/bootstrap/dist/css/bootstrap.min.css'
 
@@ -25,12 +25,18 @@ module.exports = (grunt) ->
               dest: 'dist/pages',
               ext: '.html'
             }
-          ] 
+          ]
 
     #grunt uglify
     uglify:
       build:
         files: 'dist/js/app.min.js' : ['node_modules/jquery/dist/jquery.js', 'node_modules/bootstrap/dist/js/bootstrap.js', 'app/assets/javascripts/app.js']
+    copy:
+      main:
+        expand: true,
+        cwd: 'app/assets/images',
+        src: '**'
+        dest: 'dist/assets/'
 
     # grunt watch (or simply grunt)
     watch:
@@ -42,10 +48,10 @@ module.exports = (grunt) ->
       slim:
         files: ['**/*.slim']
         tasks: ['slim']
-      concat:  
+      concat:
         files: ['**/*.js']
         tasks: ['uglify']
-      uglify:  
+      uglify:
         files: ['**/*.js']
         tasks: ['uglify']
       options:
@@ -55,13 +61,13 @@ module.exports = (grunt) ->
     connect:
       server:
         options:
-          base: 'dist'     
+          base: 'dist'
 
     # grunt gh-pages
     'gh-pages':
       options:
         base: 'dist'
-      src: ['index.html']     
+      src: ['index.html']
 
   # load plugins
   grunt.loadNpmTasks 'grunt-contrib-sass'
@@ -71,6 +77,7 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks 'grunt-gh-pages'
   grunt.loadNpmTasks 'grunt-contrib-uglify'
   grunt.loadNpmTasks 'grunt-contrib-concat'
+  grunt.loadNpmTasks 'grunt-contrib-copy'
 
   # tasks
-  grunt.registerTask 'default', ['uglify', 'sass', 'slim', 'connect', 'watch']
+  grunt.registerTask 'default', ['uglify', 'sass', 'slim', 'copy', 'connect', 'watch']
